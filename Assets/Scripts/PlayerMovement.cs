@@ -2,10 +2,10 @@
 
 public class PlayerMovement : MonoBehaviour
 {
-    private static readonly int Roll = Animator.StringToHash("Roll");
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     public Animator animator;
+
     private Vector2 movement;
     private SpriteRenderer spriteRenderer;
 
