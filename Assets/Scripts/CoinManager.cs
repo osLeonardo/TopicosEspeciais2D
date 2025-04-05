@@ -5,11 +5,14 @@ public class CoinManager : MonoBehaviour
 {
     public static CoinManager instance;
     public int coins = 0;
-    public TextMeshProUGUI coinText; // Texto na UI para mostrar as moedas
+    public TextMeshProUGUI coinText;
+    public Animator animator;
+
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
+
     void Awake()
     {
         if (instance == null)
