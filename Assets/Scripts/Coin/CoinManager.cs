@@ -23,8 +23,6 @@ public class CoinManager : MonoBehaviour
 
     public void AddCoin()
     {
-        Debug.Log('a');
-
         coins++;
         coinText.text = "Coins: " + coins;
         Debug.Log(coins);

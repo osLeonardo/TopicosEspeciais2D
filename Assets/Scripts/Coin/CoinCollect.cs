@@ -4,6 +4,7 @@ using UnityEngine;
 public class CoinCollect : MonoBehaviour
 {
     public AudioClip pickupSound;
+
     private AudioSource audioSource;
     
     void Start()
@@ -12,16 +13,16 @@ public class CoinCollect : MonoBehaviour
     }
     
     void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log(other.CompareTag("Player"));
+        if (other.CompareTag("Player"))
         {
-            Debug.Log(other.CompareTag("Player"));
-            if (other.CompareTag("Player"))
+            CoinManager.instance.AddCoin();
+            if (audioSource != null && pickupSound != null)
             {
-                CoinManager.instance.AddCoin();
-                if (audioSource != null && pickupSound != null)
-                {
-                    audioSource.PlayOneShot(pickupSound);
-                }
-                Destroy(gameObject);
+                audioSource.PlayOneShot(pickupSound);
             }
+            Destroy(gameObject);
         }
+    }
 }
