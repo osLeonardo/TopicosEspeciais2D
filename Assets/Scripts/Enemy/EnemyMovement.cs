@@ -2,7 +2,7 @@
 
 public class EnemyWalker : MonoBehaviour
 {
-    public float speed = 2f;
+    public float speed = 1f;
     public bool movingRight = false;
 
     private Rigidbody2D rb;
@@ -20,10 +20,13 @@ public class EnemyWalker : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        movingRight = !movingRight;
+        if (collision.gameObject.CompareTag("EnemyLimit"))
+        {
+            movingRight = !movingRight;
 
-        Vector3 scale = transform.localScale;
-        scale.x *= -1;
-        transform.localScale = scale;
+            Vector3 scale = transform.localScale;
+            scale.x *= -1;
+            transform.localScale = scale;
+        }
     }
 }
