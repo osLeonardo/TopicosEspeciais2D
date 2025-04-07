@@ -1,5 +1,9 @@
 using System;
+using System.Threading;
 using UnityEngine;
+using System;
+using System.Collections;
+using System.Threading.Tasks;
 
 public class CoinCollect : MonoBehaviour
 {
@@ -28,13 +32,17 @@ public class CoinCollect : MonoBehaviour
             if (audioSource != null && pickupSound != null)
             {
                 audioSource.PlayOneShot(pickupSound);
-                Debug.Log("Playing pickup sound");
+                StartCoroutine(DestroyAfterSound());
             }
             else
             {
                 Debug.LogWarning("AudioSource or pickupSound is missing");
             }
-            Destroy(gameObject);
         }
+    }
+    private IEnumerator DestroyAfterSound()
+    {
+        yield return new WaitForSeconds(pickupSound.length);
+        Destroy(gameObject);
     }
 }
