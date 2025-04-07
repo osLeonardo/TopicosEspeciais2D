@@ -7,7 +7,7 @@ public class CoinManager : MonoBehaviour
     public int coins = 0;
     public TextMeshProUGUI coinText;
 
-    void Awake()
+    private void Awake()
     {
         if (instance == null)
         {
@@ -20,25 +20,12 @@ public class CoinManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        if (coinText == null)
-        {
-            Debug.LogError("CoinText is not assigned in the inspector.");
-        }
-    }
-
     public void AddCoin()
     {
         if (coinText != null)
         {
             coins++;
             coinText.text = "Coins: " + coins;
-            Debug.Log(coins);
-        }
-        else
-        {
-            Debug.LogError("CoinText is not assigned.");
         }
     }
 }

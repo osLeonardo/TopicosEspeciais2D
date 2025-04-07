@@ -23,10 +23,6 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         rigidbody2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            Debug.LogWarning("AudioSource não encontrado no GameObject do Player.");
-        }
     }
     
     void Update()
@@ -47,15 +43,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // void FixedUpdate()
-    // {
-    //     rigidbody2d.MovePosition(rigidbody2d.position + movement * (moveSpeed * Time.fixedDeltaTime));
-    //     if (isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
-    //     {
-    //         Jump();
-    //     }
-    // }
-    
     void CheckMovementInput()
     {
         if (movement.x != 0)
