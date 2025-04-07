@@ -4,31 +4,32 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
     public float jumpForce;
-    private Rigidbody2D rigidbody2d;
     public Animator animator;
-    private bool jump = false;
-    private bool isGrounded;
-    private Vector2 movement;
-    private SpriteRenderer spriteRenderer;
-    private AudioSource audioSource;
     public AudioClip jumpSound;
     public AudioClip hurtSound;
     public AudioClip tapSound;
     public AudioClip powerSound;
+    
+    private bool _jump = false;
+    private bool _isGrounded;
+    private Vector2 _movement;
+    private Rigidbody2D _rigidbody2d;
+    private SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
 
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        rigidbody2d = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _rigidbody2d = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
     
     void Update()
     {
-        movement.x = Input.GetAxis("Horizontal") * moveSpeed;
-        transform.Translate(Time.deltaTime * movement.x, 0, 0);
+        _movement.x = Input.GetAxis("Horizontal") * moveSpeed;
+        transform.Translate(Time.deltaTime * _movement.x, 0, 0);
         
         CheckMovementInput();
         
@@ -37,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
             Roll(animator);
         }
         
-        if (isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
+        if (_isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
         {
             Jump();
         }
@@ -45,10 +46,10 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckMovementInput()
     {
-        if (movement.x != 0)
+        if (_movement.x != 0)
         {
             animator.SetBool("Run", true);
-            spriteRenderer.flipX = movement.x < 0;
+            _spriteRenderer.flipX = _movement.x < 0;
         }
         else
         {
@@ -59,25 +60,37 @@ public class PlayerMovement : MonoBehaviour
     void Roll(Animator animator)
     {
         animator.SetTrigger("Roll");
-        audioSource.PlayOneShot(powerSound);
+        _audioSource.PlayOneShot(powerSound);
     }
 
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !jump)
+        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !_jump)
         {
-            rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            audioSource.PlayOneShot(jumpSound);
-            jump = true;
-            isGrounded = false;
+            _rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            _audioSource.PlayOneShot(jumpSound);
+            _jump = true;
+            _isGrounded = false;
         }
         
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Ground") {
-            jump = false;
-            isGrounded = true;
+            _jump = false;
+            _isGrounded = true;
+        }
+        else if (collision.gameObject.tag == "Enemy")
+        {
+            if (collision.contacts[0].normal.y > 0.5f)
+            {
+                collision.gameObject.GetComponent<EnemyWalker>().Die();
+                _rigidbody2d.AddForce(new Vector2(0, jumpForce / 2), ForceMode2D.Impulse);
+            }
+            else
+            {
+                // Handle player damage or death
+            }
         }
     }
 
@@ -85,8 +98,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Ground")
         {
-            jump = true;
-            isGrounded = false;
+            _jump = true;
+            _isGrounded = false;
         }
     }
     

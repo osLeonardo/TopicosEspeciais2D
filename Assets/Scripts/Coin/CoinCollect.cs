@@ -8,25 +8,25 @@ public class CoinCollect : MonoBehaviour
 {
     public AudioClip pickupSound;
 
-    private AudioSource audioSource;
-    private SpriteRenderer spriteRenderer;
-    private Collider2D collider2d;
+    private AudioSource _audioSource;
+    private SpriteRenderer _spriteRenderer;
+    private Collider2D _collider2d;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        collider2d = GetComponent<Collider2D>();
+        _audioSource = GetComponent<AudioSource>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _collider2d = GetComponent<Collider2D>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            CoinManager.instance.AddCoin();
-            if (audioSource != null && pickupSound != null)
+            CoinManager.Instance.AddCoin();
+            if (_audioSource != null && pickupSound != null)
             {
-                audioSource.PlayOneShot(pickupSound);
+                _audioSource.PlayOneShot(pickupSound);
                 StartCoroutine(DestroyAfterSound());
             }
         }
@@ -34,8 +34,8 @@ public class CoinCollect : MonoBehaviour
 
     private IEnumerator DestroyAfterSound()
     {
-        collider2d.enabled = false;
-        spriteRenderer.enabled = false;
+        _collider2d.enabled = false;
+        _spriteRenderer.enabled = false;
 
         yield return new WaitForSeconds(pickupSound.length);
 

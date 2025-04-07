@@ -3,15 +3,15 @@ using TMPro;
 
 public class CoinManager : MonoBehaviour
 {
-    public static CoinManager instance;
-    public int coins = 0;
+    public int coins;
     public TextMeshProUGUI coinText;
+    public static CoinManager Instance;
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {

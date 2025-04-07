@@ -135,10 +135,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 75cdd6d176717a648a97a7eeb30557ff, type: 2}
-    - target: {fileID: 5128898336406752591, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_AutoTiling
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.42
@@ -178,10 +174,6 @@ PrefabInstance:
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9147122888603004003, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_FlipX
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -241,10 +233,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_04
@@ -312,10 +300,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_12
@@ -378,10 +362,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_01
@@ -439,10 +419,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_11
@@ -505,10 +481,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_03
@@ -926,10 +898,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_20
@@ -992,10 +960,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_05
@@ -1623,10 +1587,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9147122888603004003, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1693,10 +1653,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9147122888603004003, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_FlipX
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1755,10 +1711,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_15
@@ -1784,10 +1736,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 75cdd6d176717a648a97a7eeb30557ff, type: 2}
-    - target: {fileID: 5128898336406752591, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_SpriteTilingProperty.drawMode
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7
@@ -1827,10 +1775,6 @@ PrefabInstance:
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9147122888603004003, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_FlipX
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1900,10 +1844,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_16
@@ -2116,10 +2056,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 75cdd6d176717a648a97a7eeb30557ff, type: 2}
-    - target: {fileID: 5128898336406752591, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_AutoTiling
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.35
@@ -2159,10 +2095,6 @@ PrefabInstance:
     - target: {fileID: 6612412993528941859, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9147122888603004003, guid: cd605e99a8f86af459810177d0f8a8ca, type: 3}
-      propertyPath: m_FlipX
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2222,10 +2154,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_02
@@ -3103,10 +3031,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_07
@@ -3169,10 +3093,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_10
@@ -3230,10 +3150,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_08
@@ -3301,10 +3217,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_09
@@ -5279,10 +5191,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_13
@@ -8395,10 +8303,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_19
@@ -8531,10 +8435,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_17
@@ -8592,10 +8492,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_06
@@ -8653,10 +8549,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_18
@@ -15340,10 +15232,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5353958907231116628, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 9f245979af3f10e49a924650c962d4e6, type: 3}
     - target: {fileID: 7780396938558741240, guid: 9a561b2c8b7c57d43a689faddb439a96, type: 3}
       propertyPath: m_Name
       value: Coin_14

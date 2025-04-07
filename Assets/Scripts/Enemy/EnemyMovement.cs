@@ -6,28 +6,30 @@ public class EnemyWalker : MonoBehaviour
     public bool movingRight;
     public Animator animator;
 
-    private Rigidbody2D rb;
-    private string spawnAnimationName;
+    private Rigidbody2D _rb;
+    private Collider2D _collider2d;
+    private string _spawnAnimationName;
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
+        _collider2d = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         
         string controllerName = animator.runtimeAnimatorController.name;
-        spawnAnimationName = controllerName.Contains("Green") ? "Green_Slime_Spawn" : "Purple_Slime_Spawn";
+        _spawnAnimationName = controllerName.Contains("Green") ? "Green_Slime_Spawn" : "Purple_Slime_Spawn";
     }
 
     void FixedUpdate()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName(spawnAnimationName))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName(_spawnAnimationName))
         {
-            rb.linearVelocity = Vector2.zero;
+            _rb.linearVelocity = Vector2.zero;
             return;
         }
 
         Vector2 direction = movingRight ? Vector2.right : Vector2.left;
-        rb.linearVelocity = new Vector2(direction.x * speed, rb.linearVelocity.y);
+        _rb.linearVelocity = new Vector2(direction.x * speed, _rb.linearVelocity.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -40,5 +42,16 @@ public class EnemyWalker : MonoBehaviour
             scale.x *= -1;
             transform.localScale = scale;
         }
+    }
+    
+    public void Die()
+    {
+        animator.SetTrigger("Die");
+        
+        _rb.linearVelocity = Vector2.zero;
+        _rb.bodyType = RigidbodyType2D.Kinematic;
+        _collider2d.enabled = false;
+        
+        Destroy(gameObject, 1f);
     }
 }
