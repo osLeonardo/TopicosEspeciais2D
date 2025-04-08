@@ -25,7 +25,14 @@ public class CoinManager : MonoBehaviour
         if (coinText != null)
         {
             coins++;
-            coinText.text = "Coins: " + coins;
+            if (coins < 10)
+            {
+                coinText.text = "Coins: 0" + coins;
+            }
+            else
+            {
+                coinText.text = "Coins: " + coins;
+            }
         }
     }
 }
