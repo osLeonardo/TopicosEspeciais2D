@@ -34,7 +34,7 @@ public class EnemyWalker : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("EnemyLimit"))
+        if (collision.gameObject.CompareTag("EnemyLimit") || collision.gameObject.CompareTag("Player"))
         {
             movingRight = !movingRight;
 

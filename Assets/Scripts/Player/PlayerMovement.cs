@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using TMPro;
+using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public int health = 3;
     public float moveSpeed;
     public float jumpForce;
     public Animator animator;
@@ -9,8 +12,11 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip hurtSound;
     public AudioClip tapSound;
     public AudioClip powerSound;
-    
-    private bool _jump = false;
+    public TextMeshProUGUI healthText;
+
+    private bool _isDead;
+    private bool _isRolling;
+    private bool _jump;
     private bool _isGrounded;
     private Vector2 _movement;
     private Rigidbody2D _rigidbody2d;
@@ -20,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
+        UpdateHealthUI();
         animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
@@ -28,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
+        if (_isRolling || _isDead) return;
+        
         _movement.x = Input.GetAxis("Horizontal") * moveSpeed;
         transform.Translate(Time.deltaTime * _movement.x, 0, 0);
         
@@ -59,8 +68,22 @@ public class PlayerMovement : MonoBehaviour
 
     void Roll(Animator animator)
     {
+        _isRolling = true;
         animator.SetTrigger("Roll");
         _audioSource.PlayOneShot(powerSound);
+        
+        Vector2 rollDirection = _spriteRenderer.flipX ? new Vector2(-1, 0.5f) : new Vector2(1, 0.5f);
+        _rigidbody2d.AddForce(rollDirection.normalized * 2f, ForceMode2D.Impulse);
+
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, 1f, LayerMask.GetMask("Enemy"));
+
+        foreach (var enemyCollider in enemyColliders)
+        {
+            Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
+        }
+
+        StartCoroutine(ReenableCollisionAfterRoll(playerCollider, enemyColliders));
     }
 
     void Jump()
@@ -89,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                // Handle player damage or death
+                TakeDamage();
             }
         }
     }
@@ -103,4 +126,60 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     
+    private void TakeDamage()
+    {
+        if (!_isDead)
+        {
+            health--;
+            animator.SetTrigger("Hit");
+            UpdateHealthUI();
+
+            Vector2 knockbackDirection = _spriteRenderer.flipX ? new Vector2(1, 0.75f) : new Vector2(-1, 0.75f);
+            _rigidbody2d.AddForce(knockbackDirection.normalized * 1.75f, ForceMode2D.Impulse);
+
+            Collider2D playerCollider = GetComponent<Collider2D>();
+            Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Enemy"));
+            if (enemyCollider != null)
+            {
+                Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
+                StartCoroutine(ReenableCollision(playerCollider, enemyCollider));
+            }
+        }
+
+        if (health <= 0)
+        {
+            _isDead = true;
+            animator.SetTrigger("Die");
+            Debug.Log("Player is dead!");
+        }
+    }
+
+    private void UpdateHealthUI()
+    {
+        if (healthText is not null)
+        {
+            healthText.text = "Lives: 0" + health;
+        }
+    }
+
+    private IEnumerator ReenableCollision(Collider2D playerCollider, Collider2D enemyCollider)
+    {
+        yield return new WaitForSeconds(5f);
+        Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
+    }
+    
+    private IEnumerator ReenableCollisionAfterRoll(Collider2D playerCollider, Collider2D[] enemyColliders)
+    {
+        yield return new WaitForSeconds((float)(animator.GetCurrentAnimatorStateInfo(0).length * 0.6));
+
+        foreach (var enemyCollider in enemyColliders)
+        {
+            if (enemyCollider is not null)
+            {
+                Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
+            }
+        }
+        
+        _isRolling = false;
+    }
 }
