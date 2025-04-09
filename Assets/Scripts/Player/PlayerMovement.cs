@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip tapSound;
     public AudioClip powerSound;
     public TextMeshProUGUI healthText;
+    public GameObject deathScreen;
 
     private bool _isDead;
     private bool _isRolling;
@@ -150,8 +152,14 @@ public class PlayerMovement : MonoBehaviour
         {
             _isDead = true;
             animator.SetTrigger("Die");
-            Debug.Log("Player is dead!");
+            StartCoroutine(LoadDeathScreenAfterDelay());
         }
+    }
+    
+    IEnumerator LoadDeathScreenAfterDelay()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene("DeathScreen");
     }
 
     private void UpdateHealthUI()
