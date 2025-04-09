@@ -51,6 +51,7 @@ public class EnemyWalker : MonoBehaviour
         _rb.linearVelocity = Vector2.zero;
         _rb.bodyType = RigidbodyType2D.Kinematic;
         _collider2d.enabled = false;
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
         
         Destroy(gameObject, 1f);
     }
