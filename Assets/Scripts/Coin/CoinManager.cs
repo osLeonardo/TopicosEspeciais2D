@@ -1,9 +1,12 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class CoinManager : MonoBehaviour
 {
     public int coins;
+    public GameObject coinsParent;
     public TextMeshProUGUI coinText;
     public static CoinManager Instance;
 
@@ -33,6 +36,17 @@ public class CoinManager : MonoBehaviour
             {
                 coinText.text = "Coins: " + coins;
             }
+
+            if (coinsParent.transform.childCount == 1)
+            {
+                StartCoroutine(LoadWinScreenAfterDelay());
+            }
         }
+    }
+
+    private IEnumerator LoadWinScreenAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene("WinScreen");
     }
 }

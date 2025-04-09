@@ -2533,6 +2533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coins: 0
+  coinsParent: {fileID: 439858108}
   coinText: {fileID: 947253611}
 --- !u!1 &1381089445
 GameObject:
