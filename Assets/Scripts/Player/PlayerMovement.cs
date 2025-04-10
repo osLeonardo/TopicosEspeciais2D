@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D _playerCollider;
 
     private static readonly int RunBool = Animator.StringToHash("Run");
+    private static readonly int DieBool = Animator.StringToHash("Die");
     private static readonly int HitTrigger = Animator.StringToHash("Hit");
-    private static readonly int DieTrigger = Animator.StringToHash("Die");
     private static readonly int RollTrigger = Animator.StringToHash("Roll");
 
 
@@ -39,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
         _playerCollider = GetComponent<Collider2D>();
+        animator.SetBool(DieBool, false);
     }
     
     void Update()
@@ -159,6 +160,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetTrigger(HitTrigger);
             UpdateHealthUI();
 
+            if (health <= 0)
+            {
+                _isDead = true;
+                animator.SetBool(RunBool, false);
+                animator.SetBool(DieBool, true);
+                StartCoroutine(LoadDeathScreenAfterDelay());
+            }
+
             Vector2 knockbackDirection = _spriteRenderer.flipX ? new Vector2(1, 0.75f) : new Vector2(-1, 0.75f);
             _rigidbody2d.AddForce(knockbackDirection.normalized * 1.75f, ForceMode2D.Impulse);
 
@@ -169,13 +178,6 @@ public class PlayerMovement : MonoBehaviour
                 Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
                 StartCoroutine(ReenableCollision(playerCollider, enemyCollider));
             }
-        }
-
-        if (health <= 0)
-        {
-            _isDead = true;
-            animator.SetTrigger(DieTrigger);
-            StartCoroutine(LoadDeathScreenAfterDelay());
         }
     }
     
