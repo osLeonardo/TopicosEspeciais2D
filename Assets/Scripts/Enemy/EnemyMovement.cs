@@ -10,6 +10,8 @@ public class EnemyWalker : MonoBehaviour
     private Collider2D _collider2d;
     private string _spawnAnimationName;
 
+    private static readonly int DieTrigger = Animator.StringToHash("Die");
+
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -46,7 +48,7 @@ public class EnemyWalker : MonoBehaviour
     
     public void Die()
     {
-        animator.SetTrigger("Die");
+        animator.SetTrigger(DieTrigger);
         
         _rb.linearVelocity = Vector2.zero;
         _rb.bodyType = RigidbodyType2D.Kinematic;

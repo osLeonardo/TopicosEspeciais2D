@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip tapSound;
     public AudioClip powerSound;
     public TextMeshProUGUI healthText;
-    public GameObject deathScreen;
 
     private bool _isDead;
     private bool _isRolling;
@@ -24,6 +23,12 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D _rigidbody2d;
     private SpriteRenderer _spriteRenderer;
     private AudioSource _audioSource;
+    private Collider2D _playerCollider;
+
+    private static readonly int RunBool = Animator.StringToHash("Run");
+    private static readonly int HitTrigger = Animator.StringToHash("Hit");
+    private static readonly int DieTrigger = Animator.StringToHash("Die");
+    private static readonly int RollTrigger = Animator.StringToHash("Roll");
 
 
     void Start()
@@ -33,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
+        _playerCollider = GetComponent<Collider2D>();
     }
     
     void Update()
@@ -57,48 +63,50 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckMovementInput()
     {
-        if (_movement.x != 0)
+        if (_movement.x is not 0)
         {
-            animator.SetBool("Run", true);
+            animator.SetBool(RunBool, true);
             _spriteRenderer.flipX = _movement.x < 0;
         }
         else
         {
-            animator.SetBool("Run", false);
+            animator.SetBool(RunBool, false);
         }
     }
 
-    void Roll(Animator animator)
+    void Roll(Animator animatorComponent)
     {
         _isRolling = true;
-        animator.SetTrigger("Roll");
+        animatorComponent.SetTrigger(RollTrigger);
         _audioSource.PlayOneShot(powerSound);
-        
+
         Vector2 rollDirection = _spriteRenderer.flipX ? new Vector2(-1, 0.5f) : new Vector2(1, 0.5f);
         _rigidbody2d.AddForce(rollDirection.normalized * 2f, ForceMode2D.Impulse);
-
-        Collider2D playerCollider = GetComponent<Collider2D>();
         
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
             Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
-            if (enemyCollider != null)
-                Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
+            if (enemyCollider is not null)
+            {
+                Physics2D.IgnoreCollision(_playerCollider, enemyCollider, true);
+            }
         }
+
         Invoke("EndRoll", 1.4f);
     }
+
     void EndRoll()
     {
         _isRolling = false;
-        Collider2D playerCollider = GetComponent<Collider2D>();
-        // Reativa colisão com inimigos
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
             Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
-            if (enemyCollider != null)
-                Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
+            if (enemyCollider is not null)
+            {
+                Physics2D.IgnoreCollision(_playerCollider, enemyCollider, false);
+            }
         }
     }
 
@@ -115,11 +123,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground") {
+        if (collision.gameObject.CompareTag("Ground")) {
             _jump = false;
             _isGrounded = true;
         }
-        else if (collision.gameObject.tag == "Enemy")
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.contacts[0].normal.y > 0.5f)
             {
@@ -135,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ground")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             _jump = true;
             _isGrounded = false;
@@ -147,15 +155,15 @@ public class PlayerMovement : MonoBehaviour
         if (!_isDead)
         {
             health--;
-            animator.SetTrigger("Hit");
+            animator.SetTrigger(HitTrigger);
             UpdateHealthUI();
 
             Vector2 knockbackDirection = _spriteRenderer.flipX ? new Vector2(1, 0.75f) : new Vector2(-1, 0.75f);
             _rigidbody2d.AddForce(knockbackDirection.normalized * 1.75f, ForceMode2D.Impulse);
 
             Collider2D playerCollider = GetComponent<Collider2D>();
-            Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask("Enemy"));
-            if (enemyCollider != null)
+            Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask($"Enemy"));
+            if (enemyCollider is not null)
             {
                 Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
                 StartCoroutine(ReenableCollision(playerCollider, enemyCollider));
@@ -165,7 +173,7 @@ public class PlayerMovement : MonoBehaviour
         if (health <= 0)
         {
             _isDead = true;
-            animator.SetTrigger("Die");
+            animator.SetTrigger(DieTrigger);
             StartCoroutine(LoadDeathScreenAfterDelay());
         }
     }
@@ -188,20 +196,5 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
-    }
-    
-    private IEnumerator ReenableCollisionAfterRoll(Collider2D playerCollider, Collider2D[] enemyColliders)
-    {
-        yield return new WaitForSeconds((float)(animator.GetCurrentAnimatorStateInfo(0).length * 0.6));
-
-        foreach (var enemyCollider in enemyColliders)
-        {
-            if (enemyCollider is not null)
-            {
-                Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
-            }
-        }
-        
-        _isRolling = false;
     }
 }

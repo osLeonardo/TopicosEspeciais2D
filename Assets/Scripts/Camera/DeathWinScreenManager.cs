@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DeathScreenManager : MonoBehaviour
+public class DeathWinScreenManager : MonoBehaviour
 {
     public void LoadLevel01()
     {

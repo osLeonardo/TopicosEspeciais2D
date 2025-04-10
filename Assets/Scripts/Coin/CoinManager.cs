@@ -25,7 +25,7 @@ public class CoinManager : MonoBehaviour
 
     public void AddCoin()
     {
-        if (coinText != null)
+        if (coinText is not null)
         {
             coins++;
             if (coins < 10)

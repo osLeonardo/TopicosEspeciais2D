@@ -1,8 +1,5 @@
-using System.Threading;
 using UnityEngine;
-using System;
 using System.Collections;
-using System.Threading.Tasks;
 
 public class CoinCollect : MonoBehaviour
 {
@@ -24,7 +21,7 @@ public class CoinCollect : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             CoinManager.Instance.AddCoin();
-            if (_audioSource != null && pickupSound != null)
+            if (_audioSource is not null && pickupSound is not null)
             {
                 _audioSource.PlayOneShot(pickupSound);
                 StartCoroutine(DestroyAfterSound());
