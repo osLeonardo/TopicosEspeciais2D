@@ -78,14 +78,28 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody2d.AddForce(rollDirection.normalized * 2f, ForceMode2D.Impulse);
 
         Collider2D playerCollider = GetComponent<Collider2D>();
-        Collider2D[] enemyColliders = Physics2D.OverlapCircleAll(transform.position, 1f, LayerMask.GetMask("Enemy"));
-
-        foreach (var enemyCollider in enemyColliders)
+        
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
         {
-            Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
+            Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
+            if (enemyCollider != null)
+                Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
         }
-
-        StartCoroutine(ReenableCollisionAfterRoll(playerCollider, enemyColliders));
+        Invoke("EndRoll", 1.4f);
+    }
+    void EndRoll()
+    {
+        _isRolling = false;
+        Collider2D playerCollider = GetComponent<Collider2D>();
+        // Reativa colisão com inimigos
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
+            if (enemyCollider != null)
+                Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
+        }
     }
 
     void Jump()
