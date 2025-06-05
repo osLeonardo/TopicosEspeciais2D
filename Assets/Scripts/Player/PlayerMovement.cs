@@ -15,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip powerSound;
     public TextMeshProUGUI healthText;
 
+    private MobileInput _mobileInput;
     private bool _isDead;
     private bool _isRolling;
     private bool _jump;
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         UpdateHealthUI();
+        _mobileInput = FindObjectOfType<MobileInput>();
         animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
@@ -46,20 +48,44 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isRolling || _isDead) return;
         
-        _movement.x = Input.GetAxis("Horizontal") * moveSpeed;
+        float horizontalInput = _mobileInput != null ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
+        _movement.x = horizontalInput * moveSpeed;
         transform.Translate(Time.deltaTime * _movement.x, 0, 0);
-        
         CheckMovementInput();
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+
+        // Rolagem
+        bool rollPressed = (_mobileInput != null && _mobileInput.roll) || Input.GetKeyDown(KeyCode.LeftShift);
+        if (rollPressed)
         {
             Roll(animator);
+            if (_mobileInput != null) _mobileInput.ReleaseRoll(); // reseta após usar
+        }
+
+        // Pulo
+        bool jumpPressed = (_mobileInput != null && _mobileInput.jump) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
+        Debug.Log("jumpPressed");
+        Debug.Log( jumpPressed);
+        if (_isGrounded && jumpPressed)
+        {
+            Debug.Log("if");
+            Jump();
+            if (_mobileInput != null) _mobileInput.ReleaseJump(); // reseta após usar
         }
         
-        if (_isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
-        {
-            Jump();
-        }
+        // _movement.x = Input.GetAxis("Horizontal") * moveSpeed;
+        // transform.Translate(Time.deltaTime * _movement.x, 0, 0);
+        //
+        // CheckMovementInput();
+        //
+        // if (Input.GetKeyDown(KeyCode.LeftShift))
+        // {
+        //     Roll(animator);
+        // }
+        //
+        // if (_isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
+        // {
+        //     Jump();
+        // }
     }
 
     void CheckMovementInput()
@@ -113,7 +139,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-        if ((Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !_jump)
+            Debug.Log("jump");
+        
+        if ((_mobileInput != null && _mobileInput.jump) ||(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !_jump)
         {
             _rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             _audioSource.PlayOneShot(jumpSound);
