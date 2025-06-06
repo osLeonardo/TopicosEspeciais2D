@@ -160,6 +160,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isDead) return;
 
+        if (hurtSound && _audioSource)
+        {
+            _audioSource.PlayOneShot(hurtSound);
+        }
+
         health--;
         animator.SetTrigger(HitTrigger);
         UpdateHealthUI();
