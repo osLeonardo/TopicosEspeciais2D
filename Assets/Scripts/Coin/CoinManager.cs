@@ -12,7 +12,7 @@ public class CoinManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (Instance)
         {
             Instance = this;
         }
@@ -25,26 +25,25 @@ public class CoinManager : MonoBehaviour
 
     public void AddCoin()
     {
-        if (coinText is not null)
-        {
-            coins++;
-            if (coins < 10)
-            {
-                coinText.text = "Coins: 0" + coins;
-            }
-            else
-            {
-                coinText.text = "Coins: " + coins;
-            }
+        if (coinText) return;
 
-            if (coinsParent.transform.childCount == 1)
-            {
-                StartCoroutine(LoadWinScreenAfterDelay());
-            }
+        coins++;
+        if (coins < 10)
+        {
+            coinText.text = "Coins: 0" + coins;
+        }
+        else
+        {
+            coinText.text = "Coins: " + coins;
+        }
+
+        if (coinsParent.transform.childCount == 1)
+        {
+            StartCoroutine(LoadWinScreenAfterDelay());
         }
     }
 
-    private IEnumerator LoadWinScreenAfterDelay()
+    private static IEnumerator LoadWinScreenAfterDelay()
     {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("WinScreen");

@@ -32,10 +32,10 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int RollTrigger = Animator.StringToHash("Roll");
 
 
-    void Start()
+    private void Start()
     {
         UpdateHealthUI();
-        _mobileInput = FindObjectOfType<MobileInput>();
+        _mobileInput = FindFirstObjectByType<MobileInput>();
         animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody2d = GetComponent<Rigidbody2D>();
@@ -43,52 +43,31 @@ public class PlayerMovement : MonoBehaviour
         _playerCollider = GetComponent<Collider2D>();
         animator.SetBool(DieBool, false);
     }
-    
-    void Update()
+
+    private void Update()
     {
         if (_isRolling || _isDead) return;
         
-        float horizontalInput = _mobileInput != null ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
+        var horizontalInput = _mobileInput ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
         _movement.x = horizontalInput * moveSpeed;
         transform.Translate(Time.deltaTime * _movement.x, 0, 0);
         CheckMovementInput();
 
-        // Rolagem
-        bool rollPressed = (_mobileInput != null && _mobileInput.roll) || Input.GetKeyDown(KeyCode.LeftShift);
+        var rollPressed = (_mobileInput && _mobileInput.roll) || Input.GetKeyDown(KeyCode.LeftShift);
         if (rollPressed)
         {
             Roll(animator);
-            if (_mobileInput != null) _mobileInput.ReleaseRoll(); // reseta após usar
+            if (_mobileInput) _mobileInput.ReleaseRoll();
         }
 
-        // Pulo
-        bool jumpPressed = (_mobileInput != null && _mobileInput.jump) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
-        Debug.Log("jumpPressed");
-        Debug.Log( jumpPressed);
-        if (_isGrounded && jumpPressed)
-        {
-            Debug.Log("if");
-            Jump();
-            if (_mobileInput != null) _mobileInput.ReleaseJump(); // reseta após usar
-        }
-        
-        // _movement.x = Input.GetAxis("Horizontal") * moveSpeed;
-        // transform.Translate(Time.deltaTime * _movement.x, 0, 0);
-        //
-        // CheckMovementInput();
-        //
-        // if (Input.GetKeyDown(KeyCode.LeftShift))
-        // {
-        //     Roll(animator);
-        // }
-        //
-        // if (_isGrounded && (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)))
-        // {
-        //     Jump();
-        // }
+        var jumpPressed = (_mobileInput && _mobileInput.jump) || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W);
+        if (!_isGrounded || !jumpPressed) return;
+
+        Jump();
+        if (_mobileInput) _mobileInput.ReleaseJump();
     }
 
-    void CheckMovementInput()
+    private void CheckMovementInput()
     {
         if (_movement.x is not 0)
         {
@@ -101,35 +80,35 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Roll(Animator animatorComponent)
+    private void Roll(Animator animatorComponent)
     {
         _isRolling = true;
         animatorComponent.SetTrigger(RollTrigger);
         _audioSource.PlayOneShot(powerSound);
 
-        Vector2 rollDirection = _spriteRenderer.flipX ? new Vector2(-1, 0.5f) : new Vector2(1, 0.5f);
+        var rollDirection = _spriteRenderer.flipX ? new Vector2(-1, 0.5f) : new Vector2(1, 0.5f);
         _rigidbody2d.AddForce(rollDirection.normalized * 2f, ForceMode2D.Impulse);
         
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var enemy in enemies)
         {
-            Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
+            var enemyCollider = enemy.GetComponent<Collider2D>();
             if (enemyCollider is not null)
             {
                 Physics2D.IgnoreCollision(_playerCollider, enemyCollider, true);
             }
         }
 
-        Invoke("EndRoll", 1.4f);
+        Invoke(nameof(EndRoll), 1.4f);
     }
 
-    void EndRoll()
+    private void EndRoll()
     {
         _isRolling = false;
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
+        var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var enemy in enemies)
         {
-            Collider2D enemyCollider = enemy.GetComponent<Collider2D>();
+            var enemyCollider = enemy.GetComponent<Collider2D>();
             if (enemyCollider is not null)
             {
                 Physics2D.IgnoreCollision(_playerCollider, enemyCollider, false);
@@ -137,18 +116,16 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Jump()
+    private void Jump()
     {
-            Debug.Log("jump");
-        
-        if ((_mobileInput != null && _mobileInput.jump) ||(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) && !_jump)
-        {
-            _rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
-            _audioSource.PlayOneShot(jumpSound);
-            _jump = true;
-            _isGrounded = false;
-        }
-        
+        if ((!_mobileInput || !_mobileInput.jump) &&
+            ((!Input.GetKeyDown(KeyCode.UpArrow) && !Input.GetKeyDown(KeyCode.W)) || _jump)) return;
+
+        _rigidbody2d.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        _audioSource.PlayOneShot(jumpSound);
+        _jump = true;
+        _isGrounded = false;
+
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -173,43 +150,40 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            _jump = true;
-            _isGrounded = false;
-        }
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        _jump = true;
+        _isGrounded = false;
     }
     
     private void TakeDamage()
     {
-        if (!_isDead)
+        if (_isDead) return;
+
+        health--;
+        animator.SetTrigger(HitTrigger);
+        UpdateHealthUI();
+
+        if (health <= 0)
         {
-            health--;
-            animator.SetTrigger(HitTrigger);
-            UpdateHealthUI();
-
-            if (health <= 0)
-            {
-                _isDead = true;
-                animator.SetBool(RunBool, false);
-                animator.SetBool(DieBool, true);
-                StartCoroutine(LoadDeathScreenAfterDelay());
-            }
-
-            Vector2 knockbackDirection = _spriteRenderer.flipX ? new Vector2(1, 0.75f) : new Vector2(-1, 0.75f);
-            _rigidbody2d.AddForce(knockbackDirection.normalized * 1.75f, ForceMode2D.Impulse);
-
-            Collider2D playerCollider = GetComponent<Collider2D>();
-            Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask($"Enemy"));
-            if (enemyCollider is not null)
-            {
-                Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
-                StartCoroutine(ReenableCollision(playerCollider, enemyCollider));
-            }
+            _isDead = true;
+            animator.SetBool(RunBool, false);
+            animator.SetBool(DieBool, true);
+            StartCoroutine(LoadDeathScreenAfterDelay());
         }
+
+        var knockbackDirection = _spriteRenderer.flipX ? new Vector2(1, 0.75f) : new Vector2(-1, 0.75f);
+        _rigidbody2d.AddForce(knockbackDirection.normalized * 1.75f, ForceMode2D.Impulse);
+
+        var playerCollider = GetComponent<Collider2D>();
+        var enemyCollider = Physics2D.OverlapCircle(transform.position, 1f, LayerMask.GetMask($"Enemy"));
+        if (enemyCollider is null) return;
+
+        Physics2D.IgnoreCollision(playerCollider, enemyCollider, true);
+        StartCoroutine(ReenableCollision(playerCollider, enemyCollider));
     }
     
-    IEnumerator LoadDeathScreenAfterDelay()
+    private static IEnumerator LoadDeathScreenAfterDelay()
     {
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("DeathScreen");
@@ -223,7 +197,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private IEnumerator ReenableCollision(Collider2D playerCollider, Collider2D enemyCollider)
+    private static IEnumerator ReenableCollision(Collider2D playerCollider, Collider2D enemyCollider)
     {
         yield return new WaitForSeconds(5f);
         Physics2D.IgnoreCollision(playerCollider, enemyCollider, false);
