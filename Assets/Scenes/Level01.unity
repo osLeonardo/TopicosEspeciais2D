@@ -1123,7 +1123,7 @@ GameObject:
   - component: {fileID: 748808326}
   - component: {fileID: 748808325}
   - component: {fileID: 748808328}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BtnJump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 320, y: -400}
+  m_AnchoredPosition: {x: 484, y: -400}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &748808325
@@ -2035,7 +2035,7 @@ GameObject:
   - component: {fileID: 793482797}
   - component: {fileID: 793482796}
   - component: {fileID: 793482799}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BtnRoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2058,7 +2058,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 621, y: -400}
+  m_AnchoredPosition: {x: 780, y: -400}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &793482796
@@ -2757,6 +2757,10 @@ PrefabInstance:
     - target: {fileID: 2516368077938069526, guid: 91442ff1d05acd64589a9410a3cb5667, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564931550253992153, guid: 91442ff1d05acd64589a9410a3cb5667, type: 3}
+      propertyPath: moveSpeed
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6564931550253992153, guid: 91442ff1d05acd64589a9410a3cb5667, type: 3}
       propertyPath: healthText
@@ -8877,7 +8881,7 @@ GameObject:
   - component: {fileID: 1681590835}
   - component: {fileID: 1681590834}
   - component: {fileID: 1681590837}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BtnLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15897,7 +15901,7 @@ GameObject:
   - component: {fileID: 1987607281}
   - component: {fileID: 1987607280}
   - component: {fileID: 1987607283}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: BtnRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
