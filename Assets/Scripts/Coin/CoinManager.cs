@@ -18,7 +18,6 @@ public class CoinManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Multiple instances of CoinManager detected. There should only be one instance.");
             Destroy(gameObject);
         }
     }
@@ -38,7 +37,7 @@ public class CoinManager : MonoBehaviour
             }
 
         }
-        if (coins == 20)
+        if (coinsParent.transform.childCount == 1)
         {
             StartCoroutine(LoadWinScreenAfterDelay());
         }
