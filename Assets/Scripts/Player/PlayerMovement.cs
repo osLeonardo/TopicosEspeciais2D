@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private AudioSource _audioSource;
     private Collider2D _playerCollider;
+    
 
     private static readonly int RunBool = Animator.StringToHash("Run");
     private static readonly int DieBool = Animator.StringToHash("Die");
@@ -48,7 +49,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isRolling || _isDead) return;
         
-        var horizontalInput = _mobileInput ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
+        // var horizontalInput = _mobileInput ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
+        var horizontalInput = Input.GetAxis("Horizontal");
+
+        if (_mobileInput != null && Mathf.Abs(_mobileInput.horizontal) > 0.01f)
+        {
+            horizontalInput = _mobileInput.horizontal;
+        }
+
         _movement.x = horizontalInput * moveSpeed;
         transform.Translate(Time.deltaTime * _movement.x, 0, 0);
         CheckMovementInput();
