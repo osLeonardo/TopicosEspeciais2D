@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int HitTrigger = Animator.StringToHash("Hit");
     private static readonly int RollTrigger = Animator.StringToHash("Roll");
 
-
     private void Start()
     {
         UpdateHealthUI();
@@ -48,11 +47,10 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_isRolling || _isDead) return;
-        
-        // var horizontalInput = _mobileInput ? _mobileInput.horizontal : Input.GetAxis("Horizontal");
+
         var horizontalInput = Input.GetAxis("Horizontal");
 
-        if (_mobileInput != null && Mathf.Abs(_mobileInput.horizontal) > 0.01f)
+        if (_mobileInput && Mathf.Abs(_mobileInput.horizontal) > 0.01f)
         {
             horizontalInput = _mobileInput.horizontal;
         }
