@@ -9,24 +9,22 @@ public class CoinCollect : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Collider2D _collider2d;
 
-    void Start()
+    private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider2d = GetComponent<Collider2D>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            CoinManager.Instance.AddCoin();
-            if (_audioSource is not null && pickupSound is not null)
-            {
-                _audioSource.PlayOneShot(pickupSound);
-                StartCoroutine(DestroyAfterSound());
-            }
-        }
+        if (!other.CompareTag("Player")) return;
+
+        CoinManager.Instance.AddCoin();
+        if (_audioSource is null || pickupSound is null) return;
+
+        _audioSource.PlayOneShot(pickupSound);
+        StartCoroutine(DestroyAfterSound());
     }
 
     private IEnumerator DestroyAfterSound()

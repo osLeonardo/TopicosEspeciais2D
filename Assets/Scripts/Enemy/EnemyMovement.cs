@@ -12,17 +12,17 @@ public class EnemyWalker : MonoBehaviour
 
     private static readonly int DieTrigger = Animator.StringToHash("Die");
 
-    void Start()
+    private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
         _collider2d = GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
         
-        string controllerName = animator.runtimeAnimatorController.name;
+        var controllerName = animator.runtimeAnimatorController.name;
         _spawnAnimationName = controllerName.Contains("Green") ? "Green_Slime_Spawn" : "Purple_Slime_Spawn";
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (animator.GetCurrentAnimatorStateInfo(0).IsName(_spawnAnimationName))
         {
@@ -30,20 +30,18 @@ public class EnemyWalker : MonoBehaviour
             return;
         }
 
-        Vector2 direction = movingRight ? Vector2.right : Vector2.left;
+        var direction = movingRight ? Vector2.right : Vector2.left;
         _rb.linearVelocity = new Vector2(direction.x * speed, _rb.linearVelocity.y);
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("EnemyLimit") || collision.gameObject.CompareTag("Player"))
-        {
-            movingRight = !movingRight;
+        if (!collision.gameObject.CompareTag("EnemyLimit") && !collision.gameObject.CompareTag("Player")) return;
 
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
-        }
+        movingRight = !movingRight;
+        var scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
     
     public void Die()

@@ -12,20 +12,19 @@ public class CoinManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (!Instance)
         {
             Instance = this;
         }
         else
         {
-            Debug.LogError("Multiple instances of CoinManager detected. There should only be one instance.");
             Destroy(gameObject);
         }
     }
 
     public void AddCoin()
     {
-        if (coinText is not null)
+        if (coinText)
         {
             coins++;
             if (coins < 10)
@@ -37,14 +36,14 @@ public class CoinManager : MonoBehaviour
                 coinText.text = "Coins: " + coins;
             }
 
-            if (coinsParent.transform.childCount == 1)
-            {
-                StartCoroutine(LoadWinScreenAfterDelay());
-            }
+        }
+        if (coinsParent.transform.childCount == 1)
+        {
+            StartCoroutine(LoadWinScreenAfterDelay());
         }
     }
 
-    private IEnumerator LoadWinScreenAfterDelay()
+    private static IEnumerator LoadWinScreenAfterDelay()
     {
         yield return new WaitForSeconds(1f);
         SceneManager.LoadScene("WinScreen");
